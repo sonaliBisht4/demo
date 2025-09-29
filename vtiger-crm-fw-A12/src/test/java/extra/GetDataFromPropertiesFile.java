@@ -1,4 +1,4 @@
-package ddt_extra;
+package extra;
 
 import java.io.FileInputStream;
 import java.io.IOException;
