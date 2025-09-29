@@ -5,14 +5,23 @@ import java.util.Set;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 
 
+import java.io.FileInputStream;
+import java.io.IOException;
 
-public class To_Subject {
+import org.apache.poi.EncryptedDocumentException;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.WorkbookFactory;
 
-	public static void main(String[] args) throws InterruptedException 
+
+public class Cc_Gd_Excel {
+	public static void main(String[] args) throws InterruptedException ,EncryptedDocumentException, IOException
 	{
 		WebDriver driver = new ChromeDriver();
 		Thread.sleep(3000);
@@ -60,12 +69,22 @@ public class To_Subject {
 			cid.remove(pid);
 
 			// ==== Compose Window ====
-			driver.findElement(By.name("parent_name")).sendKeys("sakshi@mail.com");
-			driver.findElement(By.id("cc_name")).sendKeys("sonali@gmail.com");
-			driver.findElement(By.name("subject")).sendKeys("sonali@gmail.com");
+			driver.findElement(By.name("parent_name")).sendKeys("sonali@gmail.com");
+			
+			FileInputStream fis = new FileInputStream(".\\\\src\\test\\resources\\CcData.xlsx");
+			
+			Workbook wob = WorkbookFactory.create(fis);
+		Sheet she =wob.getSheet("EmailCC");
+		          Row rw = she.getRow(5);
+		          Cell cl = rw.getCell(0);
+		          String value = cl.getStringCellValue();
+		          System.out.println(value);
+		          
+			driver.findElement(By.id("cc_name")).sendKeys(value);
+			driver.findElement(By.name("subject")).sendKeys(value);
 
 			Thread.sleep(2000);
-
+			 
 		
 			
 			
