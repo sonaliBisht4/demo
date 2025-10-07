@@ -23,32 +23,19 @@ public class ADD_Contact_Cd_Test {
         pObj.load(fis);
         
         //retrieve values  from Properties file 
-        String BROWSER = pObj.getProperty("bro");
+       
         String URL = pObj.getProperty("url");
         String USERNAME = pObj.getProperty("un"); 
         String PASSWORD = pObj.getProperty("pwd"); 
         
         fis.close(); // FileInputStream should be closed
         
-        // --- 2. Browser Initialize 
-        
-        WebDriver driver;
+//		Open Browser 
+		WebDriver driver = new ChromeDriver();
+		driver.manage().window().maximize();
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
 
-        // BROWSER variable ki value ke base par driver initialize hoga
-        if (BROWSER.equalsIgnoreCase("chrome")) {
-            // NOTE: Agar aapke system mein ChromeDriver environment path mein nahi hai, 
-            // toh aapko System.setProperty("webdriver.chrome.driver", "path/to/chromedriver.exe"); 
-            // set karna padega.
-            driver = new ChromeDriver();
-        } else if (BROWSER.equalsIgnoreCase("firefox")) {
-            driver = new FirefoxDriver();
-        } else {
-            System.err.println("Error: Invalid browser name specified in properties file: " + BROWSER);
-            return;
-        }
-
-        driver.manage().window().maximize();
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
+      
 
         // --- 3. Login 
         
